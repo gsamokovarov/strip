@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+$: << File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'strip'
+require 'trollop'
+
+module Trollop
+  class Parser
+    alias_method :option, :opt
+  end
+end
+
+options = Trollop::options do
+  banner "Usage: #{__FILE__} [options]"
+  version "#{Strip.version} (c) 2012 Genadi Samokovarov"
+
+  option :input, "Read strip from file or standard input",
+         :type => :io, :default => $stdin
+  option :output, "Output for the input strip markup",
+         :type => :io, :default => $stdout
+end
+
+if options[:input_given]
+  Trollop::die :input, "File does not exists" unless File.exist?(options[:input])
+
+  engine = Strip::Engine.new
+  options[:output].puts engine.call(options[:input].read)
+end
+
+if ARGV.empty?
+  engine = Strip::Engine.new
+
+  [].tap do |markup|
+    begin
+      loop { markup << options[:input].gets }
+    rescue Interrupt
+      begin
+        options[:output].puts "\n#{engine.call(markup.join)}"
+      rescue Strip::Error::Base => err
+        options[:output].puts "[#{err.class}] #{err}; line #{err.line.number}"
+      end
+    end
+  end
+end
