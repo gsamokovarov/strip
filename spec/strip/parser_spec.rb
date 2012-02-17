@@ -56,7 +56,7 @@ describe Strip::Parser do
            inner1
         STRIP
 
-        expect { parse(markup) }.to raise_error(Strip::Error::SyntaxError)
+        expect { parse(markup) }.to raise_error(Strip::SyntaxError)
       end
 
       it 'on multiple root elements' do
@@ -66,7 +66,7 @@ describe Strip::Parser do
           root2
         STRIP
 
-        expect { parse(markup) }.to raise_error(Strip::Error::SyntaxError)
+        expect { parse(markup) }.to raise_error(Strip::SyntaxError)
       end
     end
   end
@@ -114,7 +114,7 @@ describe Strip::Parser do
           root attr1='value' attr2
         STRIP
 
-        expect { parse(markup) }.to raise_error Strip::Error::SyntaxError
+        expect { parse(markup) }.to raise_error Strip::SyntaxError
       end
     end
   end

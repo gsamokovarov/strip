@@ -1,22 +1,40 @@
-require 'set'
 require 'English'
 
-require 'temple'
 require 'nokogiri'
-
-require 'strip/error'
-require 'strip/util'
-require 'strip/base'
-require 'strip/generator'
-require 'strip/node'
-require 'strip/nodes'
-require 'strip/parser'
-require 'strip/compiler'
-require 'strip/engine'
-require 'strip/version'
+require 'temple'
 
 module Strip
-  def self.version
-    [Version::Major, Version::Minor, Version::Patch] * '.'
+  autoload :Compiler,   'strip/compiler'
+  autoload :Dispatcher, 'strip/dispatcher'
+  autoload :Engine,     'strip/engine'
+  autoload :Generator,  'strip/generator'
+  autoload :Grammar,    'strip/grammar'
+  autoload :Line,       'strip/line'
+  autoload :Node,       'strip/node'
+  autoload :Parser,     'strip/parser'
+  autoload :Util,       'strip/util'
+  autoload :Version,    'strip/version'
+
+  extend Strip::Util
+
+  class << self
+    def version
+      [Version::Major, Version::Minor, Version::Patch].join('.')
+    end
+  end
+
+  exception :Error
+
+  exception :SyntaxError, :extends => :Error do
+    attr_accessor :line
+
+    def initialize(message, line)
+      @message = message
+      @line    = line
+    end
+
+    def to_s
+      "[Line: #@line] #@message"
+    end
   end
 end

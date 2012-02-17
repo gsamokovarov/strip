@@ -1,11 +1,11 @@
 describe Strip::Generator do
-  context [:nokogiri, :tag].inspect do
+  context [:xml, :tag].inspect do
     it 'should handle tags with reserved names' do
       expression = 
-        [:nokogiri, :tag, 'method_missing', nil, 
-          [:nokogiri, :tag, 'comment', nil,
-            [:nokogiri, :tag, 'initialize', nil,
-              [:nokogiri, :tag, 'to_s', nil]]]]
+        [:xml, :tag, 'method_missing', nil, 
+          [:xml, :tag, 'comment', nil,
+            [:xml, :tag, 'initialize', nil,
+              [:xml, :tag, 'to_s', nil]]]]
 
       generate(expression).should eq(
         xml {
@@ -22,8 +22,8 @@ describe Strip::Generator do
 
     it 'should handle nested tag nodes' do
       expression = 
-        [:nokogiri, :tag, 'root', nil, 
-          [:nokogiri, :tag, 'child', nil]]
+        [:xml, :tag, 'root', nil, 
+          [:xml, :tag, 'child', nil]]
 
       generate(expression).should eq(
         xml {
@@ -36,9 +36,9 @@ describe Strip::Generator do
 
     it 'should handle deeply nested tag nodes' do
       expression =
-        [:nokogiri, :tag, 'root', nil, 
-          [:nokogiri, :tag, 'child', nil,
-            [:nokogiri, :tag, 'even-deeper', nil]]]
+        [:xml, :tag, 'root', nil, 
+          [:xml, :tag, 'child', nil,
+            [:xml, :tag, 'even-deeper', nil]]]
 
       generate(expression).should eq(
         xml {
@@ -54,11 +54,11 @@ describe Strip::Generator do
     [:comment, :text, :cdata].each do |node|
       it "should handle nested #{node} nodes" do
         expression =
-          [:nokogiri, :tag, 'root', nil, 
-            [:nokogiri, :tag, 'child', nil,
-              [:nokogiri, :tag, 'even-deeper', nil],
-              [:nokogiri, node, 'foo']],
-            [:nokogiri, node, 'bar']]
+          [:xml, :tag, 'root', nil, 
+            [:xml, :tag, 'child', nil,
+              [:xml, :tag, 'even-deeper', nil],
+              [:xml, node, 'foo']],
+            [:xml, node, 'bar']]
 
         generate(expression).should eq(
           xml { |_|
@@ -76,9 +76,9 @@ describe Strip::Generator do
 
     it 'should handle xml namespaces' do
       expression =
-        [:nokogiri, :tag, 'root', nil, 
-          [:nokogiri, :attr, 'xmlns:foo', 'bar'],
-          [:nokogiri, :tag, 'child', 'foo']]
+        [:xml, :tag, 'root', nil, 
+          [:xml, :attr, 'xmlns:foo', 'bar'],
+          [:xml, :tag, 'child', 'foo']]
 
       generate(expression).should eq(
         xml { |_|
@@ -90,11 +90,11 @@ describe Strip::Generator do
     end
   end
 
-  context [:nokogiri, :attr].inspect do
+  context [:xml, :attr].inspect do
     it 'should define attribtes' do
       expression =
-        [:nokogiri, :tag, 'p', nil, 
-          [:nokogiri, :attr, 'class', 'shiny']]
+        [:xml, :tag, 'p', nil, 
+          [:xml, :attr, 'class', 'shiny']]
 
       generate(expression).should eq(
         xml { |xml|
@@ -105,8 +105,8 @@ describe Strip::Generator do
 
     it 'should define attributes and namespaces' do
       expression =
-        [:nokogiri, :tag, 'root', nil, 
-          [:nokogiri, :attr, 'xmlns:foo', 'bar']]
+        [:xml, :tag, 'root', nil, 
+          [:xml, :attr, 'xmlns:foo', 'bar']]
 
       generate(expression).should eq(
         xml { |_|
@@ -118,11 +118,11 @@ describe Strip::Generator do
   end
 
   [:comment, :text, :cdata].each do |node|
-    context [:nokogiri, node].inspect do
+    context [:xml, node].inspect do
       it "should render as xml #{node} node" do
         expression =
-          [:nokogiri, :tag, 'root', nil, 
-            [:nokogiri, node, 'Hello']]
+          [:xml, :tag, 'root', nil, 
+            [:xml, node, 'Hello']]
 
         generate(expression).should eq(
           xml { |_|

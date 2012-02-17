@@ -19,6 +19,10 @@ module Support
     Strip::Parser.new.call markup
   end
 
+  def engine(markup, options = {})
+    Strip::Engine.new(options).call(markup)
+  end
+
   def create(kind, &block)
     fail "Can only create :class or :module" unless [:class, :module].include? kind
     { :class => Class, :module => Module }[kind].new(&block)
@@ -27,5 +31,5 @@ end
 
 RSpec.configure do |config|
   config.include Support
-  config.fail_fast = true
+  #config.fail_fast = true
 end

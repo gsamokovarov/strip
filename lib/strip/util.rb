@@ -1,20 +1,18 @@
-module Strip
-  module Util
-    module AbstractMethods
-      def abstract_method(*names)
-        names.each do |name|
-          define_method(name) do
-            raise NotImplementedError, "Expected implementation of #{name}"
-          end
-        end
-      end
+module Strip::Util
+  autoload :SubclassRequirements, 'strip/util/subclass_requirements'
+  autoload :ExceptionDeclaration, 'strip/util/exception_declaration'
 
-      [:private, :protected].each do |access|
-        define_method :"#{access}_abstract_method" do
-          abstract_method name, message
-          send access, name
-        end
+  class << self
+    def extended(base)
+      [SubclassRequirements, ExceptionDeclaration].each do |mod|
+        base.extend mod
       end
     end
+  end
+
+  module_function
+
+  def constantize(name)
+    name.to_s.gsub(/-/, '_').split.map(&:capitalize).join
   end
 end

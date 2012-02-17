@@ -1,7 +1,7 @@
 module Strip::Grammar
   extend Temple::Grammar
 
-  %w{ strip nokogiri }.each do |prefix|
+  %w{ strip xml }.each do |prefix|
     Expression <<
       [prefix, :tag, String, StringOrNil, 'Expression*'] |
       [prefix, :attr, String, String]                    |
