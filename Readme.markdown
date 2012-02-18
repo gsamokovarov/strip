@@ -4,10 +4,10 @@ Strip - XML for humans and stuff
 Strip is a markup language which makes writing XML by hand a more pleasant experience.
 
 Overview
---------
+========
 
 Tags
-~~~~
+----
 
 A tag is the first word on the line.
 
@@ -38,7 +38,7 @@ root
 ```
 
 Attributes
-~~~~~~~~~~
+----------
 
 Attributes follow a tag, pretty much like in regular XML.
 
@@ -54,7 +54,7 @@ root attribute="value" another-one="value"
 The attribute delimiters are whitespaces.
 
 Text
-~~~
+----
 
 Text nodes are denoted by the pipe `|` character.
 
