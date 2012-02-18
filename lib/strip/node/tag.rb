@@ -11,7 +11,7 @@ module Strip::Node
     end
 
     def children
-      @children ||= []
+      @children ||= Set.new
     end
 
     def children?
@@ -23,7 +23,10 @@ module Strip::Node
     end
 
     def parent=(node)
+      raise ArgumentError, "Can not be parent of itself" if node == self
+
       return node if @parent == node
+
       node << self unless node.nil?
       @parent = node
     end

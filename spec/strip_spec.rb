@@ -8,7 +8,7 @@ describe Strip do
     Strip::SyntaxError.should <= Strip::Error
   end
 
-  describe '#version' do
+  describe '::version' do
     it 'should consist of Major, Minor and Patch joined by a dot' do
       [Strip::Version::Major, Strip::Version::Minor, Strip::Version::Patch].join('.').should \
         eq(Strip.version)

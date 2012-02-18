@@ -29,13 +29,18 @@ describe Strip::Line do
       end
       matched.should be(true)
 
+      line.expect(/\s*/)
+
       # Second step, match the attributes.
       matched = line.scan(node[:attr]) do |data|
         %w{attr another}.should include(data[:name])
         %w{value .}.should      include(data[:value])
+        line.expect(/\s*/)
       end
       matched.should be(true)
-      
+
+      line.expect(/\s*/)
+
       # Third step, match the text node.
       matched = line.scan(node[:text]) do |data|
         data[:text].should == 'Text and stuff.'

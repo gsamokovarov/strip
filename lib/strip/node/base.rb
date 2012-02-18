@@ -23,13 +23,12 @@ class Strip::Node::Base
       (@patterns ||= []) << pattern
     end
 
-    alias :scan_with :match_with
-
     def match?(target)
       patterns.each { |pattern| return true if target === pattern }
       false
     end
 
+    alias :scan_with :match_with
     alias :=== :match?
   end
 

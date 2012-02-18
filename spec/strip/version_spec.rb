@@ -1,6 +1,7 @@
-describe 'Strip.version' do
-  it 'should consist of Major, Minor and Patch joined by a dot' do
-    [Strip::Version::Major, Strip::Version::Minor, Strip::Version::Patch].join('.').should \
-      eq(Strip.version)
+describe Strip::Version do
+  [:Major, :Minor, :Patch].each do |const|
+    it "should have #{const} part constant" do
+      Strip::Version.constants.should include(const)
+    end
   end
 end

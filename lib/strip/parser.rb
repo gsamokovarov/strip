@@ -41,9 +41,19 @@ class Strip::Parser
   parsing_tag do
     stack.push node(:tag).from(line, :parent => stack.top)
 
-    line.scan(node(:attr)) { parsing_attr }
+    line.expect(/\s*/) 
+
+    line.scan(node(:attr), :after => /\s*/) do 
+      parsing_attr
+    end
+
+    line.expect(/\s*/)
+
+    line.scan(node(:text)) do
+      parsing_inline_text
+    end
+
     unless line.postmatch.strip.empty?
-      line.scan(node(:text)) { parsing_text }
       syntax_error 'Expected attribute or text node'
     end
   end

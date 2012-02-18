@@ -3,8 +3,8 @@ module Strip::Node
     attr_accessor :name
     attr_accessor :value
 
-    scan_with /(?<name>[-:\w]+)\s*=\s*(?<quote>['"])(?<value>.*?)\k<quote>/
-    scan_with /(?<name>[-:\w]+)\s*=\s*(?<value>[^'"\s]+)/
+    scan_with /^(?<name>[-:\w]+)\s*=\s*(?<value>[^'"\s]+)/
+    scan_with /^(?<name>[-:\w]+)\s*=\s*(?<quote>['"])(?<value>.*?)\k<quote>/
 
     def to_exp
       [:strip, :attr, name, value]

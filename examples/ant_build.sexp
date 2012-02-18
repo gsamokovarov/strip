@@ -1,28 +1,28 @@
-[:nokogori, :tag, 'project', nil,
-  [:nokogiri, :attr, 'name', 'Hello', nil],
-  [:nokogiri, :attr, 'default', 'compile', nil],
+[:xml, :tag, 'project', nil,
+  [:xml, :attr, 'name', 'Hello', nil],
+  [:xml, :attr, 'default', 'compile', nil],
 
-  [:nokogiri, :tag, 'target', nil,
-    [:nokogiri, :attr, 'name', 'clean', nil],
-    [:nokogiri, :attr, 'description', 'remove intermediate files', nil],
+  [:xml, :tag, 'target', nil,
+    [:xml, :attr, 'name', 'clean', nil],
+    [:xml, :attr, 'description', 'remove intermediate files', nil],
 
-    [:nokogiri, :tag, 'delete', nil,
-      [:nokogiri, :attr, 'dir', 'classes', nil]]],
+    [:xml, :tag, 'delete', nil,
+      [:xml, :attr, 'dir', 'classes', nil]]],
 
-  [:nokogiri, :tag, 'target', nil,
-    [:nokogiri, :attr, 'name', 'clobber', nil],
-    [:nokogiri, :attr, 'description', 'remove all artifact files', nil],
+  [:xml, :tag, 'target', nil,
+    [:xml, :attr, 'name', 'clobber', nil],
+    [:xml, :attr, 'description', 'remove all artifact files', nil],
 
-    [:nokogiri, :tag, 'delete', nil,
-      [:nokogiri, :attr, 'file', 'hello.jar', nil]]],
+    [:xml, :tag, 'delete', nil,
+      [:xml, :attr, 'file', 'hello.jar', nil]]],
   
-  [:nokogiri, :tag, 'target', nil,
-    [:nokogiri, :attr, 'name', 'compile', nil],
-    [:nokogiri, :attr, 'description', 'compile the Java source code to class files', nil],
+  [:xml, :tag, 'target', nil,
+    [:xml, :attr, 'name', 'compile', nil],
+    [:xml, :attr, 'description', 'compile the Java source code to class files', nil],
 
-    [:nokogiri, :tag, 'mkdir', nil,
-      [:nokogiri, :attr, 'dir', 'classes', nil],
+    [:xml, :tag, 'mkdir', nil,
+      [:xml, :attr, 'dir', 'classes', nil],
 
-      [:nokogiri, :tag, 'javac', nil,
-        [:nokogiri, :attr, 'srcdir', '', nil],
-        [:nokogiri, :attr, 'destdir', 'classes', nil]]]]]
+      [:xml, :tag, 'javac', nil,
+        [:xml, :attr, 'srcdir', '', nil],
+        [:xml, :attr, 'destdir', 'classes', nil]]]]]

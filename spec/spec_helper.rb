@@ -31,5 +31,5 @@ end
 
 RSpec.configure do |config|
   config.include Support
-  #config.fail_fast = true
+  config.fail_fast = true
 end

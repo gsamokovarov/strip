@@ -13,6 +13,6 @@ module Strip::Util
   module_function
 
   def constantize(name)
-    name.to_s.gsub(/-/, '_').split.map(&:capitalize).join
+    name.to_s.split(/[-_]/).map(&:capitalize).join
   end
 end

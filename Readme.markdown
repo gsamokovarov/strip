@@ -1,10 +1,10 @@
 Strip - XML for humans and stuff
 ================================
 
-Strip is a markup language making it easier to write XML.
+Strip is a markup language which makes writing XML by hand a more pleasant experience.
 
-Walktrhrough
-------------
+Overview
+--------
 
 Tags
 ~~~~
@@ -56,7 +56,7 @@ The attribute delimiters are whitespaces.
 Text
 ~~~
 
-Text nodes are denoted by a `|` character.
+Text nodes are denoted by the pipe `|` character.
 
 ```
 root

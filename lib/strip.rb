@@ -1,4 +1,5 @@
 require 'English'
+require 'set'
 
 require 'nokogiri'
 require 'temple'
@@ -34,7 +35,7 @@ module Strip
     end
 
     def to_s
-      "[Line: #@line] #@message"
+      "[Line: #{@line.number}] #@message"
     end
   end
 end

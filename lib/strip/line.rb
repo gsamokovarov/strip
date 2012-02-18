@@ -30,17 +30,21 @@ class Strip::Line
     @postmatch ||= text.dup
   end
 
-  def scan(node)
-    patterns = node.respond_to?(:patterns) ? node.patterns : [node]
+  def expect(pattern)
+    pattern = /^#{pattern}/ unless "#{pattern}".start_with? '^'
 
+    unless match? pattern
+      raise Strip::SyntaxError.new("Expected #{pattern} after #{prematch.inspect}", self)
+    end
+  end
+
+  def scan(node, options = {})
     last_matched = matched
 
-    node.patterns.each do |pattern|
-      next unless match? pattern
+    while node === self
+      yield matched
 
-      begin
-        yield matched
-      end while match? pattern
+      expect options[:after] unless options[:after].nil?
     end
 
     last_matched != matched
@@ -54,10 +58,11 @@ class Strip::Line
     @matched   = $LAST_MATCH_INFO
     @prematch  = $PREMATCH
     @postmatch = $POSTMATCH
-    @cursor    = match_position + "#@matched".size
+    @cursor    += match_position + "#@matched".size
 
     true
   end
 
-  alias :=== :match?
+  alias :===  :match?
+  alias :to_s :unstripped
 end

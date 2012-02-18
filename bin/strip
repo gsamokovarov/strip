@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-$: << File.join(File.dirname(__FILE__), '..', 'lib')
+$: << File.expand_path('../../lib', __FILE__)
 
 require 'strip'
 require 'trollop'
@@ -10,6 +10,9 @@ module Trollop
     alias_method :option, :opt
   end
 end
+
+# Trollop seems to pop values right out of ARGV.
+initial_argv = ARGV.dup
 
 options = Trollop::options do
   banner "Usage: #{__FILE__} [options]"
@@ -28,18 +31,17 @@ if options[:input_given]
   options[:output].puts engine.call(options[:input].read)
 end
 
-if ARGV.empty?
+if initial_argv.empty?
   engine = Strip::Engine.new
 
-  [].tap do |markup|
+  markup = []
+  begin
+    loop { markup << options[:input].gets }
+  rescue Interrupt
     begin
-      loop { markup << options[:input].gets }
-    rescue Interrupt
-      begin
-        options[:output].puts "\n#{engine.call(markup.join)}"
-      rescue Strip::Error::Base => err
-        options[:output].puts "[#{err.class}] #{err}; line #{err.line.number}"
-      end
+      options[:output].puts "\n#{engine.call(markup.join)}"
+    rescue Strip::SyntaxError => err
+      options[:output].puts err
     end
   end
 end
